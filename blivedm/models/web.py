@@ -14,6 +14,7 @@ __all__ = (
     'GuardBuyMessage',
     'SuperChatMessage',
     'SuperChatDeleteMessage',
+    'WatchedMessage',
 )
 
 
@@ -398,4 +399,23 @@ class SuperChatDeleteMessage:
     def from_command(cls, data: dict):
         return cls(
             ids=data['ids'],
+        )
+
+
+@dataclasses.dataclass
+class WatchedMessage:
+    """
+    观看人数消息
+    """
+
+    num: int = 0
+    text_small: str = ''
+    text_large: str = ''
+
+    @classmethod
+    def from_command(cls, data: dict):
+        return cls(
+            num=data["num"],
+            text_small=data["text_small"],
+            text_large=data["text_large"]
         )

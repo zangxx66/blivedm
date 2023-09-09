@@ -13,29 +13,64 @@ __all__ = (
 logger = logging.getLogger('blivedm')
 
 logged_unknown_cmds = {
-    'COMBO_SEND',
-    'ENTRY_EFFECT',
+    'AREA_RANK_CHANGED',
+    'ANCHOR_LOT_CHECKSTATUS',  # 天选时刻检查状态
+    'ANCHOR_LOT_START',  # 天选时刻抽奖开始
+    'ANCHOR_LOT_END',  # 天选时刻抽奖结束
+    'ANCHOR_LOT_AWARD',  # 天选时刻中奖名单
+    'ANCHOR_HELPER_DANMU',
+    'COMBO_SEND',  # 礼物连击
+    'COMMON_NOTICE_DANMAKU',  # 通用通知，含红包礼物涨粉、直播活动信息等
+    'DANMU_AGGREGATION',  # 抽奖弹幕，包含天选抽奖弹幕、红包抽奖弹幕等
+    'ENTRY_EFFECT',  # 入场特效
+    'FULL_SCREEN_SPECIAL_EFFECT',
+    'GIFT_PANEL_PLAN',
+    'GIFT_STAR_PROCESS',
+    'GUARD_ACHIEVEMENT_ROOM',
+    'GUARD_HONOR_THOUSAND',
     'HOT_RANK_CHANGED',
     'HOT_RANK_CHANGED_V2',
-    'INTERACT_WORD',
-    'LIVE',
+    'LIVE',  # 直播开始
     'LIVE_INTERACTIVE_GAME',
-    'NOTICE_MSG',
-    'ONLINE_RANK_COUNT',
-    'ONLINE_RANK_TOP3',
-    'ONLINE_RANK_V2',
+    'LIVE_OPEN_PLATFORM_GAME',
+    'LIVE_PANEL_CHANGE_CONTENT',
+    'LIKE_INFO_V3_CLICK',  # 用户点赞
+    'LIKE_INFO_V3_UPDATE',  # 点赞总数量更新
+    'LIKE_INFO_V3_NOTICE',  # 双击点赞提示
+    'MESSAGEBOX_USER_GAIN_MEDAL',  # 加入粉丝团？
+    'NOTICE_MSG',  # 通知横幅
+    'ONLINE_RANK_COUNT',  # 高能用户总数量
+    'ONLINE_RANK_TOP3',  # 高能榜前三变化
+    'ONLINE_RANK_V2',  # 高能榜前七名单
+    'PK_BATTLE_START',
+    'PK_BATTLE_START_NEW',
+    'PK_BATTLE_PRE_NEW',
+    'PK_BATTLE_PRE',
     'PK_BATTLE_END',
     'PK_BATTLE_FINAL_PROCESS',
     'PK_BATTLE_PROCESS',
     'PK_BATTLE_PROCESS_NEW',
+    'PK_BATTLE_RANK_CHANGE',
     'PK_BATTLE_SETTLE',
     'PK_BATTLE_SETTLE_USER',
     'PK_BATTLE_SETTLE_V2',
-    'PREPARING',
-    'ROOM_REAL_TIME_MESSAGE_UPDATE',
-    'STOP_LIVE_ROOM_LIST',
-    'SUPER_CHAT_MESSAGE_JPN',
-    'WIDGET_BANNER',
+    'POPULAR_RANK_CHANGED',
+    'POPULARITY_RED_POCKET_NEW',  # 红包礼物
+    'POPULARITY_RED_POCKET_START',  # 红包开抢
+    'POPULARITY_RED_POCKET_WINNER_LIST',  # 红包中奖
+    'ROOM_REAL_TIME_MESSAGE_UPDATE',  # 粉丝数等更新
+    'ROOM_BLOCK_MSG',
+    'ROOM_CHANGE',
+    'ROOM_SKIN_MSG',
+    'SPREAD_SHOW_FEET',  # 流量包推广
+    'SPRED_SHOW_FEET_V2',  # 流量包推广
+    'STOP_LIVE_ROOM_LIST',  # 停播房间列表
+    'SUPER_CHAT_MESSAGE_JPN',  # 醒目留言(日)
+    'SUPER_CHAT_ENTRANCE',
+    'TRADING_SCORE',
+    'USER_TOAST_MSG',
+    'WIDGET_BANNER',  # 小部件横幅
+    'WIDGET_GIFT_STAR_PROCESS',
 }
 """已打日志的未知cmd"""
 
@@ -91,6 +126,8 @@ class BaseHandler(HandlerInterface):
         'SUPER_CHAT_MESSAGE': _make_msg_callback('_on_super_chat', web_models.SuperChatMessage),
         # 删除醒目留言
         'SUPER_CHAT_MESSAGE_DELETE': _make_msg_callback('_on_super_chat_delete', web_models.SuperChatDeleteMessage),
+        # 观看人数变化
+        'WATCHED_CHANGE': _make_msg_callback('_on_watched', web_models.WatchedMessage),
 
         #
         # 开放平台消息
@@ -160,6 +197,11 @@ class BaseHandler(HandlerInterface):
     ):
         """
         删除醒目留言
+        """
+
+    def _on_watched(self, client: ws_base.WebSocketClientBase, message: web_models.WatchedMessage):
+        """
+        观看人数变化
         """
 
     #
