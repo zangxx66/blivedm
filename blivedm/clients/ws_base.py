@@ -76,6 +76,9 @@ class AuthError(Exception):
     """认证失败"""
 
 
+DEFAULT_RECONNECT_POLICY = utils.make_constant_retry_policy(1)
+
+
 class WebSocketClientBase:
     """
     基于WebSocket的客户端
@@ -102,6 +105,8 @@ class WebSocketClientBase:
         self._need_init_room = True
         self._handler: Optional[handlers.HandlerInterface] = None
         """消息处理器"""
+        self._get_reconnect_interval: Callable[[int], float] = DEFAULT_RECONNECT_POLICY
+        """重连间隔时间增长策略"""
 
         # 在调用init_room后初始化的字段
         self._room_id: Optional[int] = None
@@ -138,6 +143,14 @@ class WebSocketClientBase:
         :param handler: 消息处理器
         """
         self._handler = handler
+
+    def set_reconnect_policy(self, get_reconnect_interval: Callable[[int], float]):
+        """
+        设置重连间隔时间增长策略
+
+        :param get_reconnect_interval: 一个可调用对象，输入重试次数，返回间隔时间
+        """
+        self._get_reconnect_interval = get_reconnect_interval
 
     def start(self):
         """
@@ -248,7 +261,7 @@ class WebSocketClientBase:
         retry_count = 0
         while True:
             try:
-                await self._on_before_ws_connect()
+                await self._on_before_ws_connect(retry_count)
 
                 # 连接
                 async with self._session.ws_connect(
@@ -280,9 +293,9 @@ class WebSocketClientBase:
             # 准备重连
             retry_count += 1
             logger.warning('room=%d is reconnecting, retry_count=%d', self.room_id, retry_count)
-            await asyncio.sleep(1)
+            await asyncio.sleep(self._get_reconnect_interval(retry_count))
 
-    async def _on_before_ws_connect(self):
+    async def _on_before_ws_connect(self, retry_count):
         """
         在每次建立连接之前调用，可以用来初始化房间
         """
