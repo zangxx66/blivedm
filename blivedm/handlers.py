@@ -20,6 +20,7 @@ logged_unknown_cmds = {
     'ANCHOR_LOT_AWARD',  # 天选时刻中奖名单
     'ANCHOR_HELPER_DANMU',
     'COMBO_SEND',  # 礼物连击
+    'COMBO_END',
     'COMMON_NOTICE_DANMAKU',  # 通用通知，含红包礼物涨粉、直播活动信息等
     'DANMU_AGGREGATION',  # 抽奖弹幕，包含天选抽奖弹幕、红包抽奖弹幕等
     'ENTRY_EFFECT',  # 入场特效
@@ -30,6 +31,7 @@ logged_unknown_cmds = {
     'GUARD_HONOR_THOUSAND',
     'HOT_RANK_CHANGED',
     'HOT_RANK_CHANGED_V2',
+    'INTERACT_WORD',
     'LIVE',  # 直播开始
     'LIVE_INTERACTIVE_GAME',
     'LIVE_OPEN_PLATFORM_GAME',
@@ -54,6 +56,7 @@ logged_unknown_cmds = {
     'PK_BATTLE_SETTLE',
     'PK_BATTLE_SETTLE_USER',
     'PK_BATTLE_SETTLE_V2',
+    'PLAYTOGETHER_ICON_CHANGE',
     'POPULAR_RANK_CHANGED',
     'POPULARITY_RED_POCKET_NEW',  # 红包礼物
     'POPULARITY_RED_POCKET_START',  # 红包开抢
@@ -63,11 +66,12 @@ logged_unknown_cmds = {
     'ROOM_CHANGE',
     'ROOM_SKIN_MSG',
     'SPREAD_SHOW_FEET',  # 流量包推广
-    'SPRED_SHOW_FEET_V2',  # 流量包推广
+    'SPREAD_SHOW_FEET_V2',  # 流量包推广
     'STOP_LIVE_ROOM_LIST',  # 停播房间列表
     'SUPER_CHAT_MESSAGE_JPN',  # 醒目留言(日)
     'SUPER_CHAT_ENTRANCE',
     'TRADING_SCORE',
+    'USER_TASK_PROGRESS_V2',  # 用户任务？
     'USER_TOAST_MSG',
     'WIDGET_BANNER',  # 小部件横幅
     'WIDGET_GIFT_STAR_PROCESS',
