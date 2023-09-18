@@ -254,10 +254,10 @@ class BLiveClient(ws_base.WebSocketClientBase):
         发送认证包
         """
         auth_params = {
-            'uid': self._uid or self.room_owner_uid or 0,
+            'uid': self._uid,
             'roomid': self._room_id,
             'protover': 3,
-            'platform': 'web',
+            'platform': 'web' if self._uid else 'app',
             'type': 2,
             'buvid': self._get_buvid(),
         }
