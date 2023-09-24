@@ -25,6 +25,7 @@ logged_unknown_cmds = {
     'CUSTOM_NOTICE_CARD',
     'DANMU_AGGREGATION',  # 抽奖弹幕，包含天选抽奖弹幕、红包抽奖弹幕等
     'ENTRY_EFFECT',  # 入场特效
+    'ENTRY_EFFECT_MUST_RECEIVE',
     'FULL_SCREEN_SPECIAL_EFFECT',
     'GIFT_PANEL_PLAN',
     'GIFT_STAR_PROCESS',
@@ -66,6 +67,7 @@ logged_unknown_cmds = {
     'ROOM_BLOCK_MSG',
     'ROOM_CHANGE',
     'ROOM_SKIN_MSG',
+    'SPREAD_ORDER_START',
     'SPREAD_ORDER_OVER',
     'SPREAD_SHOW_FEET',  # 流量包推广
     'SPREAD_SHOW_FEET_V2',  # 流量包推广
