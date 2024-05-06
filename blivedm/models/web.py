@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-import base64
-import binascii
 import dataclasses
 import json
 from typing import *
-
-from . import pb
 
 __all__ = (
     'HeartbeatMessage',
@@ -72,8 +68,6 @@ class DanmakuMessage:
     """用户ID"""
     uname: str = ''
     """用户名"""
-    face: str = ''
-    """用户头像URL"""
     admin: int = 0
     """是否房管"""
     vip: int = 0
@@ -116,18 +110,7 @@ class DanmakuMessage:
     """舰队类型，0非舰队，1总督，2提督，3舰长"""
 
     @classmethod
-    def from_command(cls, info: list, dm_v2=''):
-        proto: Optional[pb.SimpleDm] = None
-        if dm_v2 != '':
-            try:
-                proto = pb.SimpleDm.loads(base64.b64decode(dm_v2))
-            except (binascii.Error, KeyError, TypeError, ValueError):
-                pass
-        if proto is not None:
-            face = proto.user.face
-        else:
-            face = ''
-
+    def from_command(cls, info: list):
         if len(info[3]) != 0:
             medal_level = info[3][0]
             medal_name = info[3][1]
@@ -142,6 +125,13 @@ class DanmakuMessage:
             room_id = 0
             mcolor = 0
             special_medal = 0
+
+        if len(info[5]) != 0:
+            old_title = info[5][0]
+            title = info[5][1]
+        else:
+            old_title = ''
+            title = ''
 
         return cls(
             mode=info[0][1],
@@ -161,7 +151,6 @@ class DanmakuMessage:
 
             uid=info[2][0],
             uname=info[2][1],
-            face=face,
             admin=info[2][2],
             vip=info[2][3],
             svip=info[2][4],
@@ -180,8 +169,8 @@ class DanmakuMessage:
             ulevel_color=info[4][2],
             ulevel_rank=info[4][3],
 
-            old_title=info[5][0],
-            title=info[5][1],
+            old_title=old_title,
+            title=title,
 
             privilege_type=info[7],
         )
